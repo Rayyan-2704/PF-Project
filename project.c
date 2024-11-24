@@ -4,18 +4,18 @@
 #include <conio.h>
 #include <windows.h>
 
-void welcome(char player_name[]);
-void instructions();
-void display_arena(char player_name[], int runs, int ball_x, int ball_y);
-int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, int *flag_100runs, int *flag_150runs, int *flag_200runs);
-void game_over_message(char player_name[], int runs, char *choice);
-
 const int field_width = 50;
 const int field_height = 16;
 const int batsmanposition_x = 35;
 const int batsmanposition_y = 8;
 const int ball_initial_x = 0;
 const int ball_initial_y = 8;
+
+void welcome(char player_name[]);
+void instructions();
+void display_arena(char player_name[], int runs, int ball_x, int ball_y);
+int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, int *flag_100runs, int *flag_150runs, int *flag_200runs);
+void game_over_message(char player_name[], int runs, char *choice);
 
 int main()
 {
