@@ -12,7 +12,7 @@ Key features of the game include:
 The implementation uses fundamental programming concepts, including structured programming, dynamic rendering of the game field, and input handling through `_kbhit()` and `_getch()`. It is a beginner-friendly yet engaging project for learning C programming while exploring game design principles.
 
 ## Group Members
-Rayyan Aamir (24K-0687)
-Umer Dhedhi (24K-0592)
-Muhammad Usaid Khan (24K-0832)
-Rafay Mehdi (24K-0866)
+1. Rayyan Aamir (24K-0687)
+2. Umer Dhedhi (24K-0592)
+3. Muhammad Usaid Khan (24K-0832)
+4. Rafay Mehdi (24K-0866)
