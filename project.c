@@ -53,7 +53,12 @@ int main()
                     continue;                // The loop repeats, skipping the below lines of code
                 }
             }
-
+            if(flag_50runs == 1 && flag_100runs == 0){ 
+			ball_direction = 2;
+		    }
+		    else if(flag_50runs == 1 && flag_100runs == 1){ 
+			ball_direction = 3;
+            }
             ball_x += ball_direction; // The ball moves forward if the user does not swing the bat
 
             // If the user does not swing the bat at all and the ball reaches the stumps & bails
