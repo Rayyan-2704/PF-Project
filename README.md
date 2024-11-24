@@ -1,6 +1,5 @@
 # PF-Project
 ## Abstract
-### Abstract
 This project, *Cricket Strike: Test Your Timing & Rule the Stadium*, is an interactive console-based cricket simulation game written in C. The game tests the player’s reflexes and timing as they attempt to score runs by striking an oncoming ball. Players take control of a batsman, and their goal is to maximize their score while avoiding getting "out" by either missing the ball or letting it hit the stumps.
 
 Key features of the game include:
