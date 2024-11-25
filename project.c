@@ -1,3 +1,12 @@
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN "\033[36m"
+#define WHITE "\033[37m"
+#define BOLD "\033[1m"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -85,24 +94,24 @@ int main()
 
 void welcome(char player_name[])
 {
-    printf("\nCricket Strike: Test your timing & Rule the stadium!\n");
-    printf("Designed by Rayyan Aamir, Usaid Khan, Umer Dhedhi and Rafay Mehdi.\n");
+    printf(BOLD GREEN "\nCricket Strike: Test your timing & Rule the stadium!\n" RESET);
+    printf(YELLOW "Designed by Rayyan Aamir, Usaid Khan, Umer Dhedhi and Rafay Mehdi.\n" RESET);
     printf("\nPlease enter your name: ");
     fgets(player_name, 30, stdin);
     player_name[strcspn(player_name, "\n")] = '\0'; // Removing the newline and replacing it with the null character
-    printf("\nWelcome %s!\t", player_name);
+    printf("\nWelcome " CYAN "%s!\t" RESET, player_name);
 }
 
 void instructions()
 {
-    printf("Please read the instructions below:\n");
-    printf("1. Press 's' to swing the bat and strike the ball.\n");
+    printf(BLUE "Please read the instructions below:\n" RESET);
+    printf(WHITE "1. Press 's' to swing the bat and strike the ball.\n");
     printf("2. Time your strike accurately as it determines the number of runs scored.\n");
-    printf("   -Perfect timing = 6 runs.\n");
-    printf("   -Great hit = 4 runs.\n");
-    printf("   -Good timing = 3 runs.\n");
-    printf("   -Early hit = 1 or 2 runs.\n");
-    printf("   -Complete Mistiming = No runs scored.\n");
+    printf(GREEN "   -Perfect timing = 6 runs.\n");
+    printf(YELLOW "   -Great hit = 4 runs.\n");
+    printf(CYAN "   -Good timing = 3 runs.\n");
+    printf(WHITE "   -Early hit = 1 or 2 runs.\n");
+    printf(RED "   -Complete Mistiming = No runs scored.\n");
     printf("3. If the ball hits the wicket, then you are out and the game's over.\n");
     printf("4. Have fun and score as many runs as you can :) \n");
     printf("Press any key to start...\n");
@@ -115,30 +124,30 @@ void display_arena(char player_name[], int runs, int ball_x, int ball_y)
     {
         if (i == 0 || i == 4)
         {
-            printf("===========================\n");
+            printf(BOLD MAGENTA "===========================\n" RESET);
         }
         else if (i == 1 || i == 3)
         {
-            printf("||                       ||\n");
+            printf(BOLD MAGENTA "||                       ||\n" RESET);
         }
         else
         {
-            printf("||   THE CRICKET ARENA   ||\n");
+            printf(BOLD MAGENTA "||   THE CRICKET ARENA   ||\n" RESET);
         }
     }
 
-    printf("\nPlayer: %s\t Runs Scored: %d\n", player_name, runs);
+    printf("\nPlayer: " CYAN "%s\t" RESET "Runs Scored: " GREEN "%d\n" RESET, player_name, runs);
 
     // The Upper Boundary
     for (int i = 0; i < field_width; i++)
     {
         if (i == 0 || i == (field_width - 1))
         {
-            printf("+");
+            printf(GREEN "+" RESET);
         }
         else
         {
-            printf("-");
+            printf(CYAN "-" RESET);
         }
     }
     printf("\n"); // Move to the next line after the top boundary
@@ -146,59 +155,59 @@ void display_arena(char player_name[], int runs, int ball_x, int ball_y)
     // Field with elements
     for (int i = 0; i < field_height; i++)
     {
-        printf("|");
+        printf(CYAN "|" RESET);
         for (int j = 0; j < field_width - 1; j++)
         {
             if (j == ball_x && i == ball_y)
             {
-                printf("o"); // Ball
+                printf(RED "o" RESET); // Ball
             }
             else if (j == batsmanposition_x && i == batsmanposition_y - 1)
             {
-                printf("O"); // Stickman's head
+                printf(BLUE "O" RESET); // Stickman's head
             }
             else if (j == batsmanposition_x && i == batsmanposition_y)
             {
-                printf("|"); // Stickman's body
+                printf(BLUE "|" RESET); // Stickman's body
             }
             else if (j == batsmanposition_x - 1 && i == batsmanposition_y)
             {
-                printf("/"); // Stickman's left arm
+                printf(BLUE "/" RESET); // Stickman's left arm
             }
             else if (j == batsmanposition_x + 1 && i == batsmanposition_y)
             {
-                printf("\\"); // Stickman's right arm
+                printf(BLUE "\\" RESET); // Stickman's right arm
             }
             else if (j == batsmanposition_x - 1 && i == batsmanposition_y + 1)
             {
-                printf("/"); // Stickman's left leg
+                printf(BLUE "/" RESET); // Stickman's left leg
             }
             else if (j == batsmanposition_x + 1 && i == batsmanposition_y + 1)
             {
-                printf("\\"); // Stickman's right leg
+                printf(BLUE "\\" RESET); // Stickman's right leg
             }
             else if (j == batsmanposition_x + 3 && i == batsmanposition_y)
             {
-                printf("="); // Wicket's bail 1
+                printf(YELLOW "=" RESET); // Wicket's bail 1
             }
             else if (j == batsmanposition_x + 4 && i == batsmanposition_y)
             {
-                printf("="); // Wicket's bail 2
+                printf(YELLOW "=" RESET); // Wicket's bail 2
             }
             else if (j == batsmanposition_x + 5 && i == batsmanposition_y)
             {
-                printf("="); // Wicket's bail 3
+                printf(YELLOW "=" RESET); // Wicket's bail 3
             }
             else if ((j == batsmanposition_x + 3 || j == batsmanposition_x + 4 || j == batsmanposition_x + 5) && i == batsmanposition_y + 1)
             {
-                printf("|"); // Wicket's stumps
+                printf(YELLOW "|" RESET); // Wicket's stumps
             }
             else
             {
                 printf(" "); // Empty field space
             }
         }
-        printf("|\n");
+        printf(CYAN "|\n" RESET);
     }
 
     // Lower Boundary
@@ -206,11 +215,11 @@ void display_arena(char player_name[], int runs, int ball_x, int ball_y)
     {
         if (i == 0 || i == (field_width - 1))
         {
-            printf("+");
+            printf(GREEN "+" RESET);
         }
         else
         {
-            printf("-");
+            printf(CYAN "-" RESET);
         }
     }
     printf("\n"); // Move to the next line after the bottom boundary
@@ -220,17 +229,17 @@ int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, i
 {
     if (ball_x == batsmanposition_x && ball_y == batsmanposition_y)
     {
-        printf("Sensational Sixer! You scored 6 runs!\n");
+        printf(GREEN "Sensational Sixer! You scored 6 runs!\n" RESET);
         *runs += 6;
     }
     else if ((ball_x <= batsmanposition_x - 1 && ball_x >= batsmanposition_x - 2) && ball_y == batsmanposition_y)
     {
-        printf("Perfect Placement! You scored 4 runs!\n");
+        printf(YELLOW "Perfect Placement! You scored 4 runs!\n" RESET);
         *runs += 4;
     }
     else if ((ball_x <= batsmanposition_x - 3 && ball_x >= batsmanposition_x - 4) && ball_y == batsmanposition_y)
     {
-        printf("Quick Running! You scored 3 runs!\n");
+        printf(CYAN "Quick Running! You scored 3 runs!\n" RESET);
         *runs += 3;
     }
     else if ((ball_x <= batsmanposition_x - 5 && ball_x >= batsmanposition_x - 7) && ball_y == batsmanposition_y)
@@ -256,19 +265,19 @@ int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, i
 
     else
     {
-        printf("Swing and a miss! Dot ball, no runs scored.\n");
+        printf(RED "Swing and a miss! Dot ball, no runs scored.\n" RESET);
     }
 
     // Special half-century and century messages.
     if (*runs >= 50 && *flag_50runs == 0) // Only display once when it reaches 50
     {
-        printf("The crowd goes wild! You've reached a Half-Century! 50 runs! Keep going, you're on fire!\n");
+        printf(YELLOW "The crowd goes wild! You've reached a Half-Century! 50 runs! Keep going, you're on fire!\n" RESET);
         *flag_50runs = 1;
         Sleep(2000); // Pause for 2 seconds to show the special message
     }
     else if (*runs >= 100 && *flag_100runs == 0) // Only display once when it reaches 100
     {
-        printf("Unbelievable! The stadium is on its feet, cheering for you! You've scored a Full Century! 100 runs!\n");
+        printf(GREEN "Unbelievable! The stadium is on its feet, cheering for you! You've scored a Full Century! 100 runs!\n" RESET);
         *flag_100runs = 1;
         Sleep(2000); // Pause for 2 seconds to show the special message
     }
@@ -280,7 +289,7 @@ int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, i
     }
     else if (*runs >= 200 && *flag_200runs == 0) // Only display once when it reaches 200
     {
-        printf("History is made! You've scored a Double Century! 200 runs! The world is watching your masterpiece!\n");
+        printf(RED "History is made! You've scored a Double Century! 200 runs! The world is watching your masterpiece!\n" RESET);
         *flag_200runs = 1;
         Sleep(2000); // Pause for 2 seconds to show the special message
     }
@@ -291,8 +300,8 @@ int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, i
 
 void game_over_message(char player_name[], int runs, char *choice)
 {
-    printf("\nGAME OVER!\n");
-    printf("%s has scored %d runs\n", player_name, runs);
-    printf("Would you like to play again? (Y/N)");
+    printf(RED "\nGAME OVER!\n" RESET);
+    printf(CYAN "%s has scored %d runs\n" RESET, player_name, runs);
+    printf(BLUE "Would you like to play again? (Y/N)" RESET);
     scanf(" %c", choice); // Not using & as choice is already a pointer holding the address of a variable
 }
