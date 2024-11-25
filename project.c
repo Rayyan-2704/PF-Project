@@ -29,7 +29,7 @@ int main()
         int runs = 0;
         int ball_x = ball_initial_x;
         int ball_y = ball_initial_y;
-        int ball_direction = 1; // To move the ball in the rightwards direction
+        float ball_direction = 1; // To move the ball in the rightwards direction
         char player_input;
         int flag_50runs = 0, flag_100runs = 0, flag_150runs = 0, flag_200runs = 0;
 
@@ -62,6 +62,18 @@ int main()
                 printf("Oops! The ball knocked the stumps over. You're OUT!\nThe crowd sighs in disbelief... but don't worry, even legends have bad days!\n");
                 break;
             }
+            if(flag_50runs == 1 && flag_100runs == 0 && flag_150runs == 0 && flag_200runs == 0){
+            	ball_direction = 1.25;
+			}
+			else if(flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 0 && flag_200runs == 0){
+				ball_direction = 1.5;
+			}
+			else if(flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 1 && flag_200runs == 0){
+				ball_direction = 2.25;
+			}
+			else if(flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 1 && flag_200runs == 1){
+				ball_direction = 2.75;
+			}
         }
         game_over_message(player_name, runs, &choice);
         
