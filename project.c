@@ -7,23 +7,34 @@
 #define CYAN "\033[36m"
 #define WHITE "\033[37m"
 #define BOLD "\033[1m"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <conio.h>
 #include <windows.h>
 
-const int field_width = 50;
-const int field_height = 16;
-const int batsmanposition_x = 35;
-const int batsmanposition_y = 8;
-const int ball_initial_x = 0;
-const int ball_initial_y = 8;
+#define FIELD_WIDTH 50
+#define FIELD_HEIGHT 16
+#define BATSMANPOSITION_X 35
+#define BATSMANPOSITION_Y 8
+#define BALL_INITIAL_X 0
+#define BALL_INITIAL_Y 8
+#define MAX_SCORES 5
+
+typedef struct
+{
+    char name[30];
+    int score;
+} Player;
 
 void welcome(char player_name[]);
 void instructions();
 void display_arena(char player_name[], int runs, int ball_x, int ball_y);
 int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, int *flag_100runs, int *flag_150runs, int *flag_200runs);
+void read_scoreboard(Player scoreboard[]);
+void update_scoreboard(Player scoreboard[], char player_name[], int new_score);
+void display_scoreboard(Player scoreboard[]);
 void game_over_message(char player_name[], int runs, char *choice);
 
 int main()
@@ -36,8 +47,8 @@ int main()
     do
     {
         int runs = 0;
-        int ball_x = ball_initial_x;
-        int ball_y = ball_initial_y;
+        int ball_x = BALL_INITIAL_X;
+        int ball_y = BALL_INITIAL_Y;
         float ball_direction = 1; // To move the ball in the rightwards direction
         char player_input;
         int flag_50runs = 0, flag_100runs = 0, flag_150runs = 0, flag_200runs = 0;
@@ -58,7 +69,7 @@ int main()
                     {
                         break; // Exiting the loop if the batsman's out
                     }
-                    ball_x = ball_initial_x; // Resetting the ball's position for a new bowl
+                    ball_x = BALL_INITIAL_X; // Resetting the ball's position for a new bowl
                     continue;                // The loop repeats, skipping the below lines of code
                 }
             }
@@ -66,11 +77,12 @@ int main()
             ball_x += ball_direction; // The ball moves forward if the user does not swing the bat
 
             // If the user does not swing the bat at all and the ball reaches the stumps & bails
-            if (ball_x == batsmanposition_x + 3 && ball_y == batsmanposition_y)
+            if (ball_x == BATSMANPOSITION_X + 3 && ball_y == BATSMANPOSITION_Y)
             {
                 printf("Oops! The ball knocked the stumps over. You're OUT!\nThe crowd sighs in disbelief... but don't worry, even legends have bad days!\n");
                 break;
             }
+		
             if(flag_50runs == 1 && flag_100runs == 0 && flag_150runs == 0 && flag_200runs == 0){
             	ball_direction = 1.25;
 			}
@@ -84,6 +96,11 @@ int main()
 				ball_direction = 2.75;
 			}
         }
+
+	Player scoreboard[MAX_SCORES];
+        read_scoreboard(scoreboard);
+        update_scoreboard(scoreboard, player_name, runs);
+        display_scoreboard(scoreboard);
         game_over_message(player_name, runs, &choice);
         
     } while (choice == 'Y' || choice == 'y');
@@ -139,9 +156,9 @@ void display_arena(char player_name[], int runs, int ball_x, int ball_y)
     printf("\nPlayer: " CYAN "%s\t" RESET "Runs Scored: " GREEN "%d\n" RESET, player_name, runs);
 
     // The Upper Boundary
-    for (int i = 0; i < field_width; i++)
+    for (int i = 0; i < FIELD_WIDTH; i++)
     {
-        if (i == 0 || i == (field_width - 1))
+        if (i == 0 || i == (FIELD_WIDTH - 1))
         {
             printf(GREEN "+" RESET);
         }
@@ -153,52 +170,52 @@ void display_arena(char player_name[], int runs, int ball_x, int ball_y)
     printf("\n"); // Move to the next line after the top boundary
 
     // Field with elements
-    for (int i = 0; i < field_height; i++)
+    for (int i = 0; i < FIELD_HEIGHT; i++)
     {
         printf(CYAN "|" RESET);
-        for (int j = 0; j < field_width - 1; j++)
+        for (int j = 0; j < FIELD_WIDTH - 1; j++)
         {
             if (j == ball_x && i == ball_y)
             {
                 printf(RED "o" RESET); // Ball
             }
-            else if (j == batsmanposition_x && i == batsmanposition_y - 1)
+            else if (j == BATSMANPOSITION_X && i == BATSMANPOSITION_Y - 1)
             {
                 printf(BLUE "O" RESET); // Stickman's head
             }
-            else if (j == batsmanposition_x && i == batsmanposition_y)
+            else if (j == BATSMANPOSITION_X && i == BATSMANPOSITION_Y)
             {
                 printf(BLUE "|" RESET); // Stickman's body
             }
-            else if (j == batsmanposition_x - 1 && i == batsmanposition_y)
+            else if (j == BATSMANPOSITION_X - 1 && i == BATSMANPOSITION_Y)
             {
                 printf(BLUE "/" RESET); // Stickman's left arm
             }
-            else if (j == batsmanposition_x + 1 && i == batsmanposition_y)
+            else if (j == BATSMANPOSITION_X + 1 && i == BATSMANPOSITION_Y)
             {
                 printf(BLUE "\\" RESET); // Stickman's right arm
             }
-            else if (j == batsmanposition_x - 1 && i == batsmanposition_y + 1)
+            else if (j == BATSMANPOSITION_X - 1 && i == BATSMANPOSITION_Y + 1)
             {
                 printf(BLUE "/" RESET); // Stickman's left leg
             }
-            else if (j == batsmanposition_x + 1 && i == batsmanposition_y + 1)
+            else if (j == BATSMANPOSITION_X + 1 && i == BATSMANPOSITION_Y + 1)
             {
                 printf(BLUE "\\" RESET); // Stickman's right leg
             }
-            else if (j == batsmanposition_x + 3 && i == batsmanposition_y)
+            else if (j == BATSMANPOSITION_X + 3 && i == BATSMANPOSITION_Y)
             {
                 printf(YELLOW "=" RESET); // Wicket's bail 1
             }
-            else if (j == batsmanposition_x + 4 && i == batsmanposition_y)
+            else if (j == BATSMANPOSITION_X + 4 && i == BATSMANPOSITION_Y)
             {
                 printf(YELLOW "=" RESET); // Wicket's bail 2
             }
-            else if (j == batsmanposition_x + 5 && i == batsmanposition_y)
+            else if (j == BATSMANPOSITION_X + 5 && i == BATSMANPOSITION_Y)
             {
                 printf(YELLOW "=" RESET); // Wicket's bail 3
             }
-            else if ((j == batsmanposition_x + 3 || j == batsmanposition_x + 4 || j == batsmanposition_x + 5) && i == batsmanposition_y + 1)
+            else if ((j == BATSMANPOSITION_X + 3 || j == BATSMANPOSITION_X + 4 || j == BATSMANPOSITION_X + 5) && i == BATSMANPOSITION_Y + 1)
             {
                 printf(YELLOW "|" RESET); // Wicket's stumps
             }
@@ -211,9 +228,9 @@ void display_arena(char player_name[], int runs, int ball_x, int ball_y)
     }
 
     // Lower Boundary
-    for (int i = 0; i < field_width; i++)
+    for (int i = 0; i < FIELD_WIDTH; i++)
     {
-        if (i == 0 || i == (field_width - 1))
+        if (i == 0 || i == (FIELD_WIDTH - 1))
         {
             printf(GREEN "+" RESET);
         }
@@ -227,37 +244,37 @@ void display_arena(char player_name[], int runs, int ball_x, int ball_y)
 
 int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, int *flag_100runs, int *flag_150runs, int *flag_200runs)
 {
-    if (ball_x == batsmanposition_x && ball_y == batsmanposition_y)
+    if (ball_x == BATSMANPOSITION_X && ball_y == BATSMANPOSITION_Y)
     {
         printf(GREEN "Sensational Sixer! You scored 6 runs!\n" RESET);
         *runs += 6;
     }
-    else if ((ball_x <= batsmanposition_x - 1 && ball_x >= batsmanposition_x - 2) && ball_y == batsmanposition_y)
+    else if ((ball_x <= BATSMANPOSITION_X - 1 && ball_x >= BATSMANPOSITION_X - 2) && ball_y == BATSMANPOSITION_Y)
     {
         printf(YELLOW "Perfect Placement! You scored 4 runs!\n" RESET);
         *runs += 4;
     }
-    else if ((ball_x <= batsmanposition_x - 3 && ball_x >= batsmanposition_x - 4) && ball_y == batsmanposition_y)
+    else if ((ball_x <= BATSMANPOSITION_X - 3 && ball_x >= BATSMANPOSITION_X - 4) && ball_y == BATSMANPOSITION_Y)
     {
         printf(CYAN "Quick Running! You scored 3 runs!\n" RESET);
         *runs += 3;
     }
-    else if ((ball_x <= batsmanposition_x - 5 && ball_x >= batsmanposition_x - 7) && ball_y == batsmanposition_y)
+    else if ((ball_x <= BATSMANPOSITION_X - 5 && ball_x >= BATSMANPOSITION_X - 7) && ball_y == BATSMANPOSITION_Y)
     {
         printf("Double Trouble! You scored 2 runs!\n");
         *runs += 2;
     }
-    else if ((ball_x <= batsmanposition_x - 8 && ball_x >= batsmanposition_x - 11) && ball_y == batsmanposition_y)
+    else if ((ball_x <= BATSMANPOSITION_X - 8 && ball_x >= BATSMANPOSITION_X - 11) && ball_y == BATSMANPOSITION_Y)
     {
         printf("Just a tap and a run! You scored 1 run!\n");
         *runs += 1;
     }
-    else if ((ball_x == batsmanposition_x + 2 || ball_x == batsmanposition_x + 1) && ball_y == batsmanposition_y)
+    else if ((ball_x == BATSMANPOSITION_X + 2 || ball_x == BATSMANPOSITION_X + 1) && ball_y == BATSMANPOSITION_Y)
     {
         printf("Oh no! A fielder has caught the ball. You're OUT! The crowd groans in disappointment.\n");
         return 0; // Returning 0 to end the game
     }
-    else if (ball_x == batsmanposition_x + 3 && ball_y == batsmanposition_y)
+    else if (ball_x == BATSMANPOSITION_X + 3 && ball_y == BATSMANPOSITION_Y)
     {
         printf("Oops! The ball knocked the stumps over. You're OUT!\nThe crowd sighs in disbelief... but don't worry, even legends have bad days!\n");
         return 0; // Returning 0 to end the game
@@ -296,6 +313,73 @@ int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, i
 
     Sleep(1000); // Pause for 1 second before continuing the game
     return 1;    // Returning 1 to continue the game
+}
+
+void read_scoreboard(Player scoreboard[])
+{
+    FILE *file = fopen("scoreboard.txt", "r");
+    if (file == NULL)
+    {
+        printf("Error reading scoreboard file!\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < MAX_SCORES; i++)
+    {
+        fscanf(file, "%s %d", scoreboard[i].name, &scoreboard[i].score);
+    }
+
+    fclose(file);
+}
+
+void update_scoreboard(Player scoreboard[], char player_name[], int new_score)
+{
+    for (int i = 0; i < MAX_SCORES; i++)
+    {
+        if (new_score > scoreboard[i].score)
+        {
+            // Adjusting the lower scores by moving them one place down
+            for (int j = MAX_SCORES - 1; j > i; j--)
+            {
+                scoreboard[j] = scoreboard[j - 1];
+            }
+
+            // Inserting the new high score
+            strncpy(scoreboard[i].name, player_name, 30);
+            scoreboard[i].score = new_score;
+            break;
+        }
+    }
+
+    // Write the updated scoreboard back to the file
+    FILE *file = fopen("scoreboard.txt", "w");
+    if (file == NULL)
+    {
+        printf("Error writing to scoreboard file!\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < MAX_SCORES; i++)
+    { // Writing one player and his/her score at a time
+        fprintf(file, "%s %d\n", scoreboard[i].name, scoreboard[i].score);
+    }
+
+    fclose(file);
+}
+
+void display_scoreboard(Player scoreboard[])
+{
+    printf("\nSCOREBOARD:\n");
+    printf("=============================\n");
+    printf("Rank\tName\t\tScore\n");
+    printf("=============================\n");
+
+    for (int i = 0; i < MAX_SCORES; i++)
+    {
+        printf("%d.\t%s\t\t%d\n", i + 1, scoreboard[i].name, scoreboard[i].score);
+    }
+
+    printf("=============================\n");
 }
 
 void game_over_message(char player_name[], int runs, char *choice)
