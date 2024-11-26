@@ -1,4 +1,4 @@
-/* This file contains the printing of the ground, batsman, ball, stumps and bails using ASCII art */
+/* This file contains the pattern print of the ground, batsman, ball, stumps and bails using ASCII art */
 
 // #include <stdio.h>
 // void display_arena(char player_name[], int runs, int ball_x, int ball_y)
