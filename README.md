@@ -8,6 +8,7 @@ Key features of the game include:
 3. **Score Milestones**: Special messages celebrate achievements such as half-centuries (50 runs), centuries (100 runs), and beyond, enhancing player engagement.
 4. **Replayability**: Players are offered the option to restart the game upon completion, fostering an engaging and enjoyable experience.
 5. **Robust Design**: The game handles user inputs, checks for various scenarios (like hitting stumps or getting caught), and provides clear messages for all possible outcomes.
+6. **Colors & Sound Effects**: The visuals and in-game experience are also improved by adding colors and various sound effects to the game.
 
 The implementation uses fundamental programming concepts, including structured programming, dynamic rendering of the game field, and input handling through `_kbhit()` and `_getch()`. It is a beginner-friendly yet engaging project for learning C programming while exploring game design principles.
 
