@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h> // For system() function
-#include <conio.h> // For _kbhit() and _getch() functions
+#include <stdlib.h>  // For system() function
+#include <conio.h>   // For _kbhit() and _getch() functions
 #include <windows.h> // For Sleep() fucntion
 
 #define FIELD_WIDTH 50
@@ -71,7 +71,7 @@ int main()
                 {
                     if (handling_player_input(ball_x, ball_y, &runs, &flag_50runs, &flag_100runs, &flag_150runs, &flag_200runs) == 0)
                     {
-			playWicketSound();
+                        playWicketSound();
                         break; // Exiting the loop if the batsman's out
                     }
                     ball_x = BALL_INITIAL_X; // Resetting the ball's position for a new bowl
@@ -84,31 +84,35 @@ int main()
             // If the user does not swing the bat at all and the ball reaches the stumps & bails
             if (ball_x == BATSMANPOSITION_X + 3 && ball_y == BATSMANPOSITION_Y)
             {
-		playWicketSound();
+                playWicketSound();
                 printf("Oops! The ball knocked the stumps over. You're OUT!\nThe crowd sighs in disbelief... but don't worry, even legends have bad days!\n");
                 break;
             }
-		
-            if(flag_50runs == 1 && flag_100runs == 0 && flag_150runs == 0 && flag_200runs == 0){
-            	ball_direction = 1.25;
-			}
-			else if(flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 0 && flag_200runs == 0){
-				ball_direction = 1.5;
-			}
-			else if(flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 1 && flag_200runs == 0){
-				ball_direction = 2.25;
-			}
-			else if(flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 1 && flag_200runs == 1){
-				ball_direction = 2.75;
-			}
+
+            if (flag_50runs == 1 && flag_100runs == 0 && flag_150runs == 0 && flag_200runs == 0)
+            {
+                ball_direction = 1.25;
+            }
+            else if (flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 0 && flag_200runs == 0)
+            {
+                ball_direction = 1.5;
+            }
+            else if (flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 1 && flag_200runs == 0)
+            {
+                ball_direction = 2.25;
+            }
+            else if (flag_50runs == 1 && flag_100runs == 1 && flag_150runs == 1 && flag_200runs == 1)
+            {
+                ball_direction = 2.75;
+            }
         }
 
-	Player scoreboard[MAX_SCORES];
+        Player scoreboard[MAX_SCORES];
         read_scoreboard(scoreboard);
         update_scoreboard(scoreboard, player_name, runs);
         display_scoreboard(scoreboard);
         game_over_message(player_name, runs, &choice);
-        
+
     } while (choice == 'Y' || choice == 'y');
 
     printf("Thank you for playing :) \nExiting the game.....");
@@ -253,13 +257,13 @@ int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, i
     if (ball_x == BATSMANPOSITION_X && ball_y == BATSMANPOSITION_Y)
     {
         printf(GREEN "Sensational Sixer! You scored 6 runs!\n" RESET);
-	playCheerSound();
+        playCheerSound();
         *runs += 6;
     }
     else if ((ball_x <= BATSMANPOSITION_X - 1 && ball_x >= BATSMANPOSITION_X - 2) && ball_y == BATSMANPOSITION_Y)
     {
         printf(YELLOW "Perfect Placement! You scored 4 runs!\n" RESET);
-	playCheerSound();
+        playCheerSound();
         *runs += 4;
     }
     else if ((ball_x <= BATSMANPOSITION_X - 3 && ball_x >= BATSMANPOSITION_X - 4) && ball_y == BATSMANPOSITION_Y)
@@ -279,14 +283,14 @@ int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, i
     }
     else if ((ball_x == BATSMANPOSITION_X + 2 || ball_x == BATSMANPOSITION_X + 1) && ball_y == BATSMANPOSITION_Y)
     {
+        playOutSound();
         printf("Oh no! A fielder has caught the ball. You're OUT! The crowd groans in disappointment.\n");
-	playOutSound();
         return 0; // Returning 0 to end the game
     }
     else if (ball_x == BATSMANPOSITION_X + 3 && ball_y == BATSMANPOSITION_Y)
     {
+        playWicketSound();
         printf("Oops! The ball knocked the stumps over. You're OUT!\nThe crowd sighs in disbelief... but don't worry, even legends have bad days!\n");
-	playWicketSound();
         return 0; // Returning 0 to end the game
     }
 
@@ -299,28 +303,28 @@ int handling_player_input(int ball_x, int ball_y, int *runs, int *flag_50runs, i
     if (*runs >= 50 && *flag_50runs == 0) // Only display once when it reaches 50
     {
         printf(YELLOW "The crowd goes wild! You've reached a Half-Century! 50 runs! Keep going, you're on fire!\n" RESET);
-	playApplauseSound();
+        playApplauseSound();
         *flag_50runs = 1;
         Sleep(2000); // Pause for 2 seconds to show the special message
     }
     else if (*runs >= 100 && *flag_100runs == 0) // Only display once when it reaches 100
     {
         printf(GREEN "Unbelievable! The stadium is on its feet, cheering for you! You've scored a Full Century! 100 runs!\n" RESET);
-	playApplauseSound();
+        playApplauseSound();
         *flag_100runs = 1;
         Sleep(2000); // Pause for 2 seconds to show the special message
     }
     else if (*runs >= 150 && *flag_150runs == 0) // Only display once when it reaches 150
     {
         printf("Incredible! You're unstoppable! A magnificent 150 runs! The crowd is in awe of your skill and timing!\n");
-	playApplauseSound();
+        playApplauseSound();
         *flag_150runs = 1;
         Sleep(2000); // Pause for 2 seconds to show the special message
     }
     else if (*runs >= 200 && *flag_200runs == 0) // Only display once when it reaches 200
     {
         printf(RED "History is made! You've scored a Double Century! 200 runs! The world is watching your masterpiece!\n" RESET);
-	playApplauseSound();
+        playApplauseSound();
         *flag_200runs = 1;
         Sleep(2000); // Pause for 2 seconds to show the special message
     }
@@ -334,7 +338,7 @@ void read_scoreboard(Player scoreboard[])
     FILE *file = fopen("scoreboard.txt", "r");
     if (file == NULL)
     {
-        printf(BOLD RED "Error reading scoreboard file!\n" RESET);
+        printf("Error reading scoreboard file!\n");
         exit(1);
     }
 
@@ -369,7 +373,7 @@ void update_scoreboard(Player scoreboard[], char player_name[], int new_score)
     FILE *file = fopen("scoreboard.txt", "w");
     if (file == NULL)
     {
-        printf(BOLD RED "Error writing to scoreboard file!\n" RESET);
+        printf("Error writing to scoreboard file!\n");
         exit(1);
     }
 
@@ -384,16 +388,16 @@ void update_scoreboard(Player scoreboard[], char player_name[], int new_score)
 void display_scoreboard(Player scoreboard[])
 {
     printf(BOLD BLUE "\nSCOREBOARD:\n" RESET);
-    printf(GREEN"=============================\n" RESET);
+    printf(GREEN "=============================\n" RESET);
     printf(YELLOW "Rank\tName\t\tScore\n" RESET);
     printf(GREEN "=============================\n" RESET);
 
     for (int i = 0; i < MAX_SCORES; i++)
     {
-        printf(CYAN "%d.\t%s\t\t%d\n", RESET, i + 1, scoreboard[i].name, scoreboard[i].score);
+        printf(CYAN "%d.\t%s\t\t%d\n" RESET, i + 1, scoreboard[i].name, scoreboard[i].score);
     }
 
-    printf(YELLOW "=============================\n" RESET);
+    printf(GREEN "=============================\n" RESET);
 }
 
 void game_over_message(char player_name[], int runs, char *choice)
@@ -403,26 +407,31 @@ void game_over_message(char player_name[], int runs, char *choice)
     printf(BLUE "Would you like to play again? (Y/N)" RESET);
     scanf(" %c", choice); // Not using & as choice is already a pointer holding the address of a variable
 }
-void playWicketSound(){
-	mciSendString("open \"Wicket.wav\" type waveaudio alias sound", NULL, 0, NULL);
-	mciSendString("play sound wait", NULL, 0, NULL);
-	mciSendString("close sound", NULL, 0, NULL);
+
+void playWicketSound()
+{
+    mciSendString("open \"Wicket.wav\" type waveaudio alias sound", NULL, 0, NULL);
+    mciSendString("play sound wait", NULL, 0, NULL);
+    mciSendString("close sound", NULL, 0, NULL);
 }
 
-void playCheerSound(){
-	mciSendString("open \"Cheer.wav\" type waveaudio alias sound", NULL, 0, NULL);
-	mciSendString("play sound wait", NULL, 0, NULL);
-	mciSendString("close sound", NULL, 0, NULL);
+void playCheerSound()
+{
+    mciSendString("open \"Cheer.wav\" type waveaudio alias sound", NULL, 0, NULL);
+    mciSendString("play sound wait", NULL, 0, NULL);
+    mciSendString("close sound", NULL, 0, NULL);
 }
 
-void playApplauseSound(){
-	mciSendString("open \"Clapping.wav\" type waveaudio alias sound", NULL, 0, NULL);
-	mciSendString("play sound wait", NULL, 0, NULL);
-	mciSendString("close sound", NULL, 0, NULL);
+void playApplauseSound()
+{
+    mciSendString("open \"Clapping.wav\" type waveaudio alias sound", NULL, 0, NULL);
+    mciSendString("play sound wait", NULL, 0, NULL);
+    mciSendString("close sound", NULL, 0, NULL);
 }
 
-void playOutSound(){
-	mciSendString("open \"Aww.wav\" type waveaudio alias sound", NULL, 0, NULL);
-	mciSendString("play sound wait", NULL, 0, NULL);
-	mciSendString("close sound", NULL, 0, NULL);
+void playOutSound()
+{
+    mciSendString("open \"Aww.wav\" type waveaudio alias sound", NULL, 0, NULL);
+    mciSendString("play sound wait", NULL, 0, NULL);
+    mciSendString("close sound", NULL, 0, NULL);
 }
