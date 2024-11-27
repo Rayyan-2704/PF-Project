@@ -10,9 +10,9 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <windows.h>
+#include <stdlib.h> // For system() function
+#include <conio.h> // For _kbhit() and _getch() functions
+#include <windows.h> // For Sleep() fucntion
 
 #define FIELD_WIDTH 50
 #define FIELD_HEIGHT 16
@@ -132,7 +132,7 @@ void instructions()
     printf("3. If the ball hits the wicket, then you are out and the game's over.\n");
     printf("4. Have fun and score as many runs as you can :) \n");
     printf("Press any key to start...\n");
-    getch();
+    _getch();
 }
 
 void display_arena(char player_name[], int runs, int ball_x, int ball_y)
