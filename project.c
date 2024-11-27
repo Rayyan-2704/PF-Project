@@ -134,7 +134,7 @@ void instructions()
     printf(YELLOW "   -Great hit = 4 runs.\n");
     printf(CYAN "   -Good timing = 3 runs.\n");
     printf(WHITE "   -Early hit = 1 or 2 runs.\n");
-    printf(RED "   -Complete Mistiming = No runs scored.\n");
+    printf(RED "   -Complete Mistiming = No runs scored.\n" RESET);
     printf("3. If the ball hits the wicket, then you are out and the game's over.\n");
     printf("4. Have fun and score as many runs as you can :) \n");
     printf("Press any key to start...\n");
@@ -350,7 +350,7 @@ void update_scoreboard(Player scoreboard[], char player_name[], int new_score)
 {
     for (int i = 0; i < MAX_SCORES; i++)
     {
-        if (new_score > scoreboard[i].score)
+        if (new_score >= scoreboard[i].score)
         {
             // Adjusting the lower scores by moving them one place down
             for (int j = MAX_SCORES - 1; j > i; j--)
