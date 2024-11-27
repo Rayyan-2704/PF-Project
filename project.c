@@ -336,7 +336,7 @@ void update_scoreboard(Player scoreboard[], char player_name[], int new_score)
 {
     for (int i = 0; i < MAX_SCORES; i++)
     {
-        if (new_score > scoreboard[i].score)
+        if (new_score >= scoreboard[i].score)
         {
             // Adjusting the lower scores by moving them one place down
             for (int j = MAX_SCORES - 1; j > i; j--)
