@@ -71,7 +71,7 @@ int main()
                 {
                     if (handling_player_input(ball_x, ball_y, &runs, &flag_50runs, &flag_100runs, &flag_150runs, &flag_200runs) == 0)
                     {
-                        playWicketSound();
+                        playOutSound();
                         break; // Exiting the loop if the batsman's out
                     }
                     ball_x = BALL_INITIAL_X; // Resetting the ball's position for a new bowl
