@@ -334,7 +334,7 @@ void read_scoreboard(Player scoreboard[])
     FILE *file = fopen("scoreboard.txt", "r");
     if (file == NULL)
     {
-        printf("Error reading scoreboard file!\n");
+        printf(BOLD RED "Error reading scoreboard file!\n" RESET);
         exit(1);
     }
 
@@ -369,7 +369,7 @@ void update_scoreboard(Player scoreboard[], char player_name[], int new_score)
     FILE *file = fopen("scoreboard.txt", "w");
     if (file == NULL)
     {
-        printf("Error writing to scoreboard file!\n");
+        printf(BOLD RED "Error writing to scoreboard file!\n" RESET);
         exit(1);
     }
 
@@ -383,17 +383,17 @@ void update_scoreboard(Player scoreboard[], char player_name[], int new_score)
 
 void display_scoreboard(Player scoreboard[])
 {
-    printf("\nSCOREBOARD:\n");
-    printf("=============================\n");
-    printf("Rank\tName\t\tScore\n");
-    printf("=============================\n");
+    printf(BOLD BLUE "\nSCOREBOARD:\n" RESET);
+    printf(GREEN"=============================\n" RESET);
+    printf(YELLOW "Rank\tName\t\tScore\n" RESET);
+    printf(GREEN "=============================\n" RESET);
 
     for (int i = 0; i < MAX_SCORES; i++)
     {
-        printf("%d.\t%s\t\t%d\n", i + 1, scoreboard[i].name, scoreboard[i].score);
+        printf(CYAN "%d.\t%s\t\t%d\n", RESET, i + 1, scoreboard[i].name, scoreboard[i].score);
     }
 
-    printf("=============================\n");
+    printf(YELLOW "=============================\n" RESET);
 }
 
 void game_over_message(char player_name[], int runs, char *choice)
