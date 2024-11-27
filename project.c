@@ -128,7 +128,7 @@ void instructions()
     printf(YELLOW "   -Great hit = 4 runs.\n");
     printf(CYAN "   -Good timing = 3 runs.\n");
     printf(WHITE "   -Early hit = 1 or 2 runs.\n");
-    printf(RED "   -Complete Mistiming = No runs scored.\n");
+    printf(RED "   -Complete Mistiming = No runs scored.\n" RESET);
     printf("3. If the ball hits the wicket, then you are out and the game's over.\n");
     printf("4. Have fun and score as many runs as you can :) \n");
     printf("Press any key to start...\n");
