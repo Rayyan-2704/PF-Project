@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdlib.h>  // For system() function
 #include <conio.h>   // For _kbhit() and _getch() functions
-#include <windows.h> // For Sleep() fucntion
+#include <windows.h> // For Sleep() function
 
 #define FIELD_WIDTH 50
 #define FIELD_HEIGHT 16
